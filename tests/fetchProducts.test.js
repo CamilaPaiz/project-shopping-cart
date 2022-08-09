@@ -8,8 +8,8 @@ describe('1 - Teste a função fetchProducts', () => {
   });
 
   it('Teste se ao passar o parâmetro computador fetch é chamada',async () => {
-   const reponse = await fetchProducts('computador');
-    expect(reponse.fetch).toHaveBeenCalled();
+   const response = await fetchProducts('computador');
+    expect(response.fetch).toHaveBeenCalled();
   });
 
   it('Teste se ao passar o argumento computador a função fetch utiliza o endpoint correto', async () => {

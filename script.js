@@ -37,5 +37,19 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.addEventListener('click', cartItemClickListener);
   return li;
 };
+const productSection = document.querySelector('.items');
+const renderProducts = async () => {
+const fetchProduct = await fetchProducts('computador');
 
-window.onload = () => { };
+fetchProduct.forEach((computer) => {
+  const infos = { sku: computer.id, name: computer.title, image: computer.thumbnail };
+  const newProduct = createProductItemElement(infos);
+  console.log(newProduct);
+
+  productSection.appendChild(newProduct);
+});
+};
+
+window.onload = async () => {
+ await renderProducts();
+ };
