@@ -1,5 +1,5 @@
-const fetchProducts = () => {
-  // seu código aqui
+const fetchProducts = async () => {
+  
 };
 
 if (typeof module !== 'undefined') {
