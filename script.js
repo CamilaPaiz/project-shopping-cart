@@ -16,9 +16,9 @@ const createCustomElement = (element, className, innerText) => {
   e.innerText = innerText;
   return e;
 };
-
+// https://developer.mozilla.org/pt-BR/docs/Web/API/EventTarget/removeEventListener
 const cartItemClickListener = (event) => {
- 
+ event.target.remove();
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
