@@ -1,3 +1,7 @@
+const productSection = document.querySelector('.items');
+const productCart = document.querySelector('.cart__items');
+const productInCart = [];
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -37,14 +41,21 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.addEventListener('click', cartItemClickListener);
   return li;
 };
-const productSection = document.querySelector('.items');
+// requisito4
+const addCart = async (id) => {
+  const fetchItems = await fetchItem(id);
+  const info = { sku: computer.id, name: computer.title, salePrice: computer.price };
+  const addedProduct = createCartItemElement(info);
+  console.log(addedProduct);
+  productCart.appendChild(addedProduct);
+};
+
 const renderProducts = async () => {
 const fetchProduct = await fetchProducts('computador');
 
 fetchProduct.forEach((computer) => {
   const infos = { sku: computer.id, name: computer.title, image: computer.thumbnail };
   const newProduct = createProductItemElement(infos);
-  console.log(newProduct);
 
   productSection.appendChild(newProduct);
 });

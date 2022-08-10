@@ -8,8 +8,8 @@ describe('2 - Teste a função fetchItem', () => {
   });
   
   it('Teste se ao receber o argumento, MLB1615760527, fetch é chamada', async () =>{
-    const response = await fetchItem('MLB1615760527');
-    expect(response).toHaveBeenCalled();
+    await fetchItem('MLB1615760527');
+    expect(fetch).toHaveBeenCalled();
   });
 
   it('Teste se ao chamar a função com o argumento,MLB1615760527, a função fetch utiliza o endpoint correto', async () =>{
@@ -20,11 +20,11 @@ describe('2 - Teste a função fetchItem', () => {
 
   it('Teste se o retorno da função fetchItem com argumento,MLB1615760527, é um objeto igual a item', async () => {
     const responseApi = await fetchItem('MLB1615760527');
-    expect(responseApi).toEqual(item);
+    expect(responseApi).toEqual(item.results);
   });
 
   it('Teste se ao chamar a função sem argumento, retorna o erro, You must provide an url', async () => {
-    const failRequest = await fetchItem ();
+   const failRequest = await fetchItem();
     expect(failRequest).toEqual(new Error('You must provide an url'));
   });
 

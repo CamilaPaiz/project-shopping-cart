@@ -8,8 +8,8 @@ describe('1 - Teste a função fetchProducts', () => {
   });
 
   it('Teste se ao passar o parâmetro computador fetch é chamada',async () => {
-   const response = await fetchProducts('computador');
-    expect(response.fetch).toHaveBeenCalled();
+    await fetchProducts('computador');
+    expect(fetch).toHaveBeenCalled();
   });
 
   it('Teste se ao passar o argumento computador a função fetch utiliza o endpoint correto', async () => {
@@ -23,7 +23,7 @@ describe('1 - Teste a função fetchProducts', () => {
     expect(responseApi).toEqual(computadorSearch.results)
   });
 
-  it('Teste se, ao chamar a função fetchProducts sem argumento,retorna um erro com a mensagem -You must provide an url', async () => { 
+  it('Teste se, ao chamar a função sem argumento,retorna a mensagem -You must provide an url', async () => { 
     const failRequest = await fetchProducts();
     expect(failRequest).toEqual(new Error('You must provide an url'));
    });
