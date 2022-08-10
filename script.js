@@ -1,6 +1,7 @@
 const productSection = document.querySelector('.items');
-const productCart = document.querySelector('.cart__items');
-const productInCart = [];
+const productCartArea = document.querySelector('.cart__items');
+const buttonAddInCart = document.querySelector('.item__add');
+const selectedProduct = [];
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -16,22 +17,8 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const createProductItemElement = ({ sku, name, image }) => {
-  const section = document.createElement('section');
-  section.className = 'item';
-
-  section.appendChild(createCustomElement('span', 'item__sku', sku));
-  section.appendChild(createCustomElement('span', 'item__title', name));
-  section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
-  return section;
-};
-
-const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
-
 const cartItemClickListener = (event) => {
-  // coloque seu código aqui
+ 
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -41,14 +28,35 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.addEventListener('click', cartItemClickListener);
   return li;
 };
-// requisito4
-const addCart = async (id) => {
-  const fetchItems = await fetchItem(id);
-  const info = { sku: computer.id, name: computer.title, salePrice: computer.price };
-  const addedProduct = createCartItemElement(info);
-  console.log(addedProduct);
-  productCart.appendChild(addedProduct);
+
+const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+
+const addProductInCart = async (event) => {
+const product = getSkuFromProductItem(event.target.parentElement);
+  const fetchItems = await fetchItem(product);
+console.log(fetchItems);
+  
+    const info = { sku: fetchItems.id, name: fetchItems.title, salePrice: fetchItems.price };
+    const addedProduct = createCartItemElement(info);
+    console.log(addedProduct);
+    productCartArea.appendChild(addedProduct);
+  };
+
+const createProductItemElement = ({ sku, name, image }) => {
+  const section = document.createElement('section');
+  section.className = 'item';
+
+  section.appendChild(createCustomElement('span', 'item__sku', sku));
+  section.appendChild(createCustomElement('span', 'item__title', name));
+  section.appendChild(createProductImageElement(image));
+  const button = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+  button.addEventListener('click', addProductInCart);
+  section.appendChild(button);
+
+  return section;
 };
+
+// requisito2
 
 const renderProducts = async () => {
 const fetchProduct = await fetchProducts('computador');
