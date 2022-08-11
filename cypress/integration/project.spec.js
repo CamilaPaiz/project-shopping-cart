@@ -160,11 +160,12 @@ describe('Shopping Cart Project', () => {
         .children()
         .first()
         .should('have.text', `SKU: ${results[first].id} | NAME: ${results[first].title} | PRICE: $${results[first].price}`)
-
+        
       cy.get(CART_ITEMS)
         .children()
         .last()
         .should('have.text', `SKU: ${results[last].id} | NAME: ${results[last].title} | PRICE: $${results[last].price}`)
+        console.log('camila')
     });
 
     it('Deverá ser possível remover items do carrinho ao clicar sobre eles mesmo após recarregar a página', () => {

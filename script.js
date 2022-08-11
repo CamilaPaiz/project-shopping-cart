@@ -5,8 +5,6 @@ const buttonClean = document.querySelector('.empty-cart');
 const textCounter = document.querySelector('.container-cartTitle');
 const messageLoading = document.querySelector('.loading');
 
-const selectedProduct = [];
-
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -22,7 +20,7 @@ const createCustomElement = (element, className, innerText) => {
 };
 // https://developer.mozilla.org/pt-BR/docs/Web/API/EventTarget/removeEventListener
 const cartItemClickListener = (event) => {
- event.target.remove();
+event.target.remove();
 };
 
 buttonClean.addEventListener('click', function () {
@@ -45,11 +43,10 @@ const addProductInCart = async (event) => {
   
     const info = { sku: fetchItems.id, name: fetchItems.title, salePrice: fetchItems.price };
     const addedProduct = createCartItemElement(info);
-    console.log(addedProduct);
+    console.log(typeof addedProduct);
     productCartArea.appendChild(addedProduct);
-    // const valor = event.target.salePrice;
-    // console.log(valor)
-    saveCartItems('cartItems', addedProduct.innerHTML);
+    
+    saveCartItems(addedProduct.innerHTML);
   };
 
 const createProductItemElement = ({ sku, name, image }) => {
@@ -66,28 +63,23 @@ const createProductItemElement = ({ sku, name, image }) => {
   return section;
 };
 
-// requisito 9
-
-// let counter =0;
-// const showCounter = document.createElement ('h3')
-// showCounter.className ='total-price';
-// showCounter.innerHTML =`valor total dos produtos: `
-// textCounter.appendChild(showCounter);
-// função para calcular o valor do saldo total e mostrar no innerHTML,faz requisição da api do addProductIncart
-// const counterPrice = async ()=> {
-
-// }
+ const counterPrice = async () => {
+  const counter = 0;
+  const showCounter = document.createElement('h3');
+  showCounter.className = 'total-price';
+  showCounter.innerHTML = 'valor total dos produtos: ';
+  textCounter.appendChild(showCounter);
+ };
 
 function messageRender() {
   const message = document.createElement('h2');
   message.className = 'loading';
   message.innerHTML = 'carregando...';
   loadingMessageArea.appendChild(message);
-  setTimeout (() =>{
-  loadingMessageArea.removeChild(message)
-},1000);
+  setTimeout(() => {
+  loadingMessageArea.removeChild(message);
+}, 1000);
   }
-
 
 const renderProducts = async () => {
   messageRender();
@@ -98,11 +90,11 @@ fetchProduct.forEach((computer) => {
   const infos = { sku: computer.id, name: computer.title, image: computer.thumbnail };
   const newProduct = createProductItemElement(infos);
  productSection.appendChild(newProduct);
- 
 });
 };
 
 window.onload = async () => {
  await renderProducts();
- getSavedCartItems('cartItems');
+
+ productCartArea.innerHTML = getSavedCartItems();
  };
