@@ -83,15 +83,11 @@ function messageRender() {
   message.className = 'loading';
   message.innerHTML = 'carregando...';
   loadingMessageArea.appendChild(message);
-  setTimeout(() => {
-  loadingMessageArea.removeChild(message);
-}, 1000);
+  setTimeout (() =>{
+  loadingMessageArea.removeChild(message)
+},1000);
   }
 
-  // function removeMessage() {
-  //  loadingMessageArea.removeChild(messageLoading)
-   
-  // }
 
 const renderProducts = async () => {
   messageRender();
@@ -102,6 +98,7 @@ fetchProduct.forEach((computer) => {
   const infos = { sku: computer.id, name: computer.title, image: computer.thumbnail };
   const newProduct = createProductItemElement(infos);
  productSection.appendChild(newProduct);
+ 
 });
 };
 
