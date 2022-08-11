@@ -1,7 +1,10 @@
 const productSection = document.querySelector('.items');
 const productCartArea = document.querySelector('.cart__items');
-const awaitingMessage = document.querySelector('.container');
+const loadingMessageArea = document.querySelector('.container');
 const buttonClean = document.querySelector('.empty-cart');
+const textCounter = document.querySelector('.container-cartTitle');
+const messageLoading = document.querySelector('.loading');
+
 const selectedProduct = [];
 
 const createProductImageElement = (imageSource) => {
@@ -44,6 +47,8 @@ const addProductInCart = async (event) => {
     const addedProduct = createCartItemElement(info);
     console.log(addedProduct);
     productCartArea.appendChild(addedProduct);
+    // const valor = event.target.salePrice;
+    // console.log(valor)
     saveCartItems('cartItems', addedProduct.innerHTML);
   };
 
@@ -61,23 +66,42 @@ const createProductItemElement = ({ sku, name, image }) => {
   return section;
 };
 
-// function messageRender(value,callback){
-// setTimeout(() =>{
- // const message = document.createElement('h2');
-// message.className = 'loading'
- // message.innerHTML = 'carregando...'
- // return message
-// },1000)
+// requisito 9
+
+// let counter =0;
+// const showCounter = document.createElement ('h3')
+// showCounter.className ='total-price';
+// showCounter.innerHTML =`valor total dos produtos: `
+// textCounter.appendChild(showCounter);
+// função para calcular o valor do saldo total e mostrar no innerHTML,faz requisição da api do addProductIncart
+// const counterPrice = async ()=> {
+
 // }
 
+function messageRender() {
+  const message = document.createElement('h2');
+  message.className = 'loading';
+  message.innerHTML = 'carregando...';
+  loadingMessageArea.appendChild(message);
+  setTimeout(() => {
+  loadingMessageArea.removeChild(message);
+}, 1000);
+  }
+
+  // function removeMessage() {
+  //  loadingMessageArea.removeChild(messageLoading)
+   
+  // }
+
 const renderProducts = async () => {
+  messageRender();
+
 const fetchProduct = await fetchProducts('computador');
 
 fetchProduct.forEach((computer) => {
   const infos = { sku: computer.id, name: computer.title, image: computer.thumbnail };
   const newProduct = createProductItemElement(infos);
-
-  productSection.appendChild(newProduct);
+ productSection.appendChild(newProduct);
 });
 };
 
