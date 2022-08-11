@@ -3,7 +3,6 @@ const productCartArea = document.querySelector('.cart__items');
 const loadingMessageArea = document.querySelector('.container');
 const buttonClean = document.querySelector('.empty-cart');
 const textCounter = document.querySelector('.container-cartTitle');
-const messageLoading = document.querySelector('.loading');
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -19,6 +18,7 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 // https://developer.mozilla.org/pt-BR/docs/Web/API/EventTarget/removeEventListener
+
 const cartItemClickListener = (event) => {
 event.target.remove();
 };
@@ -43,10 +43,9 @@ const addProductInCart = async (event) => {
   
     const info = { sku: fetchItems.id, name: fetchItems.title, salePrice: fetchItems.price };
     const addedProduct = createCartItemElement(info);
-    console.log(typeof addedProduct);
     productCartArea.appendChild(addedProduct);
     
-    saveCartItems(addedProduct.innerHTML);
+    saveCartItems(productCartArea.innerHTML);
   };
 
 const createProductItemElement = ({ sku, name, image }) => {
