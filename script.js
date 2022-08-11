@@ -1,6 +1,7 @@
 const productSection = document.querySelector('.items');
 const productCartArea = document.querySelector('.cart__items');
-const buttonAddInCart = document.querySelector('.item__add');
+const awaitingMessage = document.querySelector('.container');
+const buttonClean = document.querySelector('.empty-cart');
 const selectedProduct = [];
 
 const createProductImageElement = (imageSource) => {
@@ -21,6 +22,10 @@ const cartItemClickListener = (event) => {
  event.target.remove();
 };
 
+buttonClean.addEventListener('click', function () {
+  productCartArea.innerHTML = '';
+});
+
 const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -32,14 +37,14 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const addProductInCart = async (event) => {
-const product = getSkuFromProductItem(event.target.parentElement);
+  const product = getSkuFromProductItem(event.target.parentElement);
   const fetchItems = await fetchItem(product);
-console.log(fetchItems);
   
     const info = { sku: fetchItems.id, name: fetchItems.title, salePrice: fetchItems.price };
     const addedProduct = createCartItemElement(info);
     console.log(addedProduct);
     productCartArea.appendChild(addedProduct);
+    saveCartItems('cartItems', addedProduct.innerHTML);
   };
 
 const createProductItemElement = ({ sku, name, image }) => {
@@ -56,7 +61,14 @@ const createProductItemElement = ({ sku, name, image }) => {
   return section;
 };
 
-// requisito2
+// function messageRender(value,callback){
+// setTimeout(() =>{
+ // const message = document.createElement('h2');
+// message.className = 'loading'
+ // message.innerHTML = 'carregando...'
+ // return message
+// },1000)
+// }
 
 const renderProducts = async () => {
 const fetchProduct = await fetchProducts('computador');
@@ -71,4 +83,5 @@ fetchProduct.forEach((computer) => {
 
 window.onload = async () => {
  await renderProducts();
+ getSavedCartItems('cartItems');
  };
