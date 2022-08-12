@@ -21,10 +21,12 @@ const createCustomElement = (element, className, innerText) => {
 
 const cartItemClickListener = (event) => {
 event.target.remove();
+saveCartItems(productCartArea.innerHTML);
 };
 
-buttonClean.addEventListener('click', function () {
+buttonClean.addEventListener('click', function (event) {
   productCartArea.innerHTML = '';
+  localStorage.removeItem('cartItems');
 });
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -62,13 +64,14 @@ const createProductItemElement = ({ sku, name, image }) => {
   return section;
 };
 
- const counterPrice = async () => {
-  const counter = 0;
-  const showCounter = document.createElement('h3');
-  showCounter.className = 'total-price';
-  showCounter.innerHTML = 'valor total dos produtos: ';
-  textCounter.appendChild(showCounter);
- };
+ // const counterPrice = async () => {
+ // const counter = 0;
+  // const showCounter = document.createElement('h3');
+  // showCounter.className = 'total-price';
+  // showCounter.innerHTML = 'valor total dos produtos: ';
+ // textCounter.appendChild(showCounter);
+ // productCartArea.innerHTML
+ // };
 
 function messageRender() {
   const message = document.createElement('h2');
@@ -95,5 +98,6 @@ fetchProduct.forEach((computer) => {
 window.onload = async () => {
  await renderProducts();
 
- productCartArea.innerHTML = getSavedCartItems();
+ productCartArea.innerHTML = getSavedCartItems('cartItems');
+ productCartArea.addEventListener('click', cartItemClickListener);
  };
