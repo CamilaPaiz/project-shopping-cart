@@ -1,8 +1,11 @@
+
+
 const productSection = document.querySelector('.items');
 const productCartArea = document.querySelector('.cart__items');
 const loadingMessageArea = document.querySelector('.container');
 const buttonClean = document.querySelector('.empty-cart');
 const textCounter = document.querySelector('.container-cartTitle');
+let cartArray =[];
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -45,10 +48,15 @@ const addProductInCart = async (event) => {
   
     const info = { sku: fetchItems.id, name: fetchItems.title, salePrice: fetchItems.price };
     const addedProduct = createCartItemElement(info);
-    productCartArea.appendChild(addedProduct);
     
-    saveCartItems(productCartArea.innerHTML);
-  };
+      productCartArea.appendChild(addedProduct);
+      saveCartItems(productCartArea.innerHTML);
+    }
+
+    
+  
+    
+
 
 const createProductItemElement = ({ sku, name, image }) => {
   const section = document.createElement('section');
@@ -64,14 +72,22 @@ const createProductItemElement = ({ sku, name, image }) => {
   return section;
 };
 
- // const counterPrice = async () => {
- // const counter = 0;
-  // const showCounter = document.createElement('h3');
-  // showCounter.className = 'total-price';
-  // showCounter.innerHTML = 'valor total dos produtos: ';
- // textCounter.appendChild(showCounter);
- // productCartArea.innerHTML
- // };
+  function counterPriceText (){
+  
+  const showCounter = document.createElement('h3');
+   showCounter.className = 'total-price';
+   showCounter.innerHTML = 'Valor total : ';
+  textCounter.appendChild(showCounter);
+  //productCartArea.innerHTML;
+
+  };
+  counterPriceText()
+  
+ /// counterPriceText()
+
+//const counterPrice =  () => {
+  
+//}
 
 function messageRender() {
   const message = document.createElement('h2');
@@ -98,6 +114,7 @@ fetchProduct.forEach((computer) => {
 window.onload = async () => {
  await renderProducts();
 
+ 
  productCartArea.innerHTML = getSavedCartItems('cartItems');
  productCartArea.addEventListener('click', cartItemClickListener);
  };
